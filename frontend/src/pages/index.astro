@@ -1,6 +1,6 @@
 ---
 // Component Imports
-
+import Location from '../components/location.astro';
 
 // Component Script:
 let title = 'PantherFi';
@@ -34,47 +34,7 @@ let title = 'PantherFi';
 
 		main {
 			width: 100%;
-			max-width: 800px;
-		}
-
-		div.location {
-			border-top: rgba(255,255,255,0.5) 1px solid;
-			padding: .5rem 0;
-			display: grid;
-			grid-template-columns: auto repeat(3, 1fr);
-			column-gap: .5rem;
-			line-height: 1;
-
-			h2 {
-				padding-right: .5em;
-			}
-
-			& > div {
-				display: flex;
-				align-items: flex-end;
-			}
-			
-			.location-info-type {
-				margin-right: .5em;
-			}
-
-			.status {
-				display: inline-block;
-				font-size: 0.8rem;
-				padding: 0.2rem 0.3rem;
-				border-radius: 0.2rem;
-				margin-bottom: -0.2rem;
-				background: rgba(255,255,255,0.1);
-
-				&.up {
-					background: #2fcc66;
-					color: black;
-				}
-
-				&.down {
-					background: #336699;
-				}
-			}
+			max-width: 1000px;
 		}
 	</style>
 </head>
@@ -85,21 +45,9 @@ let title = 'PantherFi';
 		</div>
 	</header>
 	<main>
-		<div class="location">
-			<h2>Hillman Library - First Floor</h2>
-			<div>
-				<span class="location-info-type">Status:</span>
-				<span class="status up">Up</span>
-			</div>
-			<div>
-				<span class="location-info-type">Speed:</span>
-				<span>40↓ 20↑</span>
-			</div>
-			<div>
-				<span class="location-info-type">Ping:</span>
-				<span>5ms</span>
-			</div>
-		</div>
+		<Location name="Hillman Library - First Floor" status="up" down={22} up={41} ping={5} />
+		<Location name="Hillman Library - Third Floor" status="up" down={24} up={37} ping={7} />
+		<Location name="Hillman Library - Fourth Floor" status="up" down={21} up={36} ping={6} />
 	</main>
 </body>
 </html>
