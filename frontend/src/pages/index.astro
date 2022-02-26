@@ -1,6 +1,6 @@
 ---
 // Component Imports
-import Location from '../components/location.astro';
+import Location from '../components/Location.vue';
 
 // Component Script:
 let title = 'PantherFi';
@@ -45,9 +45,9 @@ let title = 'PantherFi';
 		</div>
 	</header>
 	<main>
-		<Location name="Hillman Library - First Floor" status="up" down={22} up={41} ping={5} />
-		<Location name="Hillman Library - Third Floor" status="up" down={24} up={37} ping={7} />
-		<Location name="Hillman Library - Fourth Floor" status="up" down={21} up={36} ping={6} />
+		<Location name="Hillman Library - First Floor" client:load />
+		<Location name="Hillman Library - Third Floor" client:load />
+		<Location name="Hillman Library - Fourth Floor" client:load />
 	</main>
 </body>
 </html>

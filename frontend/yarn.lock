@@ -93,7 +93,7 @@
     svelte "^3.46.4"
     svelte-preprocess "^4.10.2"
 
-"@astrojs/renderer-vue@0.4.0":
+"@astrojs/renderer-vue@0.4.0", "@astrojs/renderer-vue@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@astrojs/renderer-vue/-/renderer-vue-0.4.0.tgz#65ed0e60fdc74792de5ed773f0a8200039e409c7"
   integrity sha512-jeD+KJZcIGIyZDMkA2uKkA+vRGC/+bRV4o9+q+yFJA+npLHuGt9EdSTAqvEJyBMvZ+O2JG2wgAl8S7nFy1S7nw==
