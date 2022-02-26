@@ -1,14 +1,9 @@
 ---
 // Component Imports
-import Tour from '../components/Tour.astro';
-// You can import components from any supported Framework here!
 
 
 // Component Script:
-// You can write any JavaScript/TypeScript that you'd like here.
-// It will run during the build, but never in the browser.
-// All variables are available to use in the HTML template below.
-let title = 'My Astro Site';
+let title = 'PantherFi';
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
@@ -20,42 +15,91 @@ let title = 'My Astro Site';
 	<title>{title}</title>
 
 	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-	<style global>
-		@import "../styles/global.css";
-		@import "../styles/home.css";
+	<style global lang="scss">
+		@import "../styles/global.scss";
 	</style>
-
-	<style>
+	<style lang="scss">
 		header {
 			display: flex;
 			flex-direction: column;
 			gap: 1em;
 			max-width: min(100%, 68ch);
+
+			img {
+				height: 4em;
+			}
+
+			margin-bottom: 2rem;
+		}
+
+		main {
+			width: 100%;
+			max-width: 800px;
+		}
+
+		div.location {
+			border-top: rgba(255,255,255,0.5) 1px solid;
+			padding: .5rem 0;
+			display: grid;
+			grid-template-columns: auto repeat(3, 1fr);
+			column-gap: .5rem;
+			line-height: 1;
+
+			h2 {
+				padding-right: .5em;
+			}
+
+			& > div {
+				display: flex;
+				align-items: flex-end;
+			}
+			
+			.location-info-type {
+				margin-right: .5em;
+			}
+
+			.status {
+				display: inline-block;
+				font-size: 0.8rem;
+				padding: 0.2rem 0.3rem;
+				border-radius: 0.2rem;
+				margin-bottom: -0.2rem;
+				background: rgba(255,255,255,0.1);
+
+				&.up {
+					background: #2fcc66;
+					color: black;
+				}
+
+				&.down {
+					background: #336699;
+				}
+			}
 		}
 	</style>
 </head>
 <body>
+	<header>
+		<div>
+			<img src="/assets/logo.svg" alt="PantherFi logo">
+		</div>
+	</header>
 	<main>
-		<header>
+		<div class="location">
+			<h2>Hillman Library - First Floor</h2>
 			<div>
-				<img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
-				<h1>Welcome to <a href="https://astro.build/">Astro</a></h1>
+				<span class="location-info-type">Status:</span>
+				<span class="status up">Up</span>
 			</div>
-		</header>
-
-		<Tour />
-
-		<!--
-
-		You can also use imported framework components directly in your markup!
-		
-		Note: by default, these components are NOT interactive on the client.
-		The `:visible` directive tells Astro to make it interactive.
-		
-		See https://docs.astro.build/core-concepts/component-hydration/ 
-
-		-->
-
+			<div>
+				<span class="location-info-type">Speed:</span>
+				<span>40↓ 20↑</span>
+			</div>
+			<div>
+				<span class="location-info-type">Ping:</span>
+				<span>5ms</span>
+			</div>
+		</div>
 	</main>
 </body>
 </html>
