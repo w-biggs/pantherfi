@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, Response, request
 import pymongo
 from bson import json_util
 import time
@@ -16,7 +16,11 @@ observations = db["observations"]
 @app.route('/')
 def get_observations():
   obs = observations.find({}) # get all observations - query to only get last 24h will be written later
-  return json_util.dumps(obs)
+  return Response(
+    json_util.dumps(obs),
+    headers={"Access-Control-Allow-Origin":"*"},
+    mimetype='application/json'
+  )
   
 
 
