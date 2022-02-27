@@ -19,7 +19,10 @@ def get_observations():
   for node in found_nodes:
     node_obs = list(observations.find({"node": node["_id"]}))
     node["obs"] = node_obs
-    curr_status = 'down' if int(time.time()) - 120 > node_obs[-1]["timestamp"] else 'up';
+    if (len(node_obs) == 0):
+      curr_status == 'down'
+    else:
+      curr_status = 'down' if int(time.time()) - 120 > node_obs[-1]["timestamp"] else 'up';
     status_obj = {
       'status': curr_status
     }
