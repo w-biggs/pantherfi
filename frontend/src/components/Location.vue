@@ -19,20 +19,21 @@
       </button>
     </div>
     <div class="graphs">
-      <div id="down-graph"></div>
-      <div id="up-graph"></div>
-      <div id="ping-graph"></div>
+      <div :id="`down-graph-${index}`"></div>
+      <div :id="`up-graph-${index}`"></div>
+      <div :id="`ping-graph-${index}`"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, toRaw } from 'vue';
 import Highcharts from 'highcharts'; 
 import BrokenAxis from 'highcharts/modules/broken-axis';
 
 const props = defineProps({
-  data: Object
+  data: Object,
+  index: Number
 });
 
 const buildChartOptions = function buildChartOptions(units, data) {
@@ -61,7 +62,7 @@ const buildChartOptions = function buildChartOptions(units, data) {
       tickInterval: (10 * 60 * 1000),
       type: 'datetime',
       max: new Date().getTime(),
-      min: new Date().getTime() - (6 * 60 * 60 * 1000),
+      min: new Date().getTime() - (2 * 60 * 60 * 1000),
     },
     yAxis: {
       title: {
@@ -69,7 +70,7 @@ const buildChartOptions = function buildChartOptions(units, data) {
       }
     },
     series: [{
-      data: data,
+      data: toRaw(data),
       marker: {
         enabled: true,
         fillColor: 'rgba(255,255,255,0.25)',
@@ -81,9 +82,9 @@ const buildChartOptions = function buildChartOptions(units, data) {
 
 onMounted(() => {
   BrokenAxis(Highcharts);
-  Highcharts.chart('down-graph', buildChartOptions('Download (mbps)', props.data.obs.down));
-  Highcharts.chart('up-graph', buildChartOptions('Upload (mbps)', props.data.obs.up));
-  Highcharts.chart('ping-graph', buildChartOptions('Ping (ms)', props.data.obs.ping));
+  Highcharts.chart(`down-graph-${props.index}`, buildChartOptions('Download (mbps)', props.data.obs.down));
+  Highcharts.chart(`up-graph-${props.index}`, buildChartOptions('Upload (mbps)', props.data.obs.up));
+  Highcharts.chart(`ping-graph-${props.index}`, buildChartOptions('Ping (ms)', props.data.obs.ping));
 });
 
 const statusStrings = {

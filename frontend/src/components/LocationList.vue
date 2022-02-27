@@ -1,6 +1,6 @@
 <template>
   <div>
-		<Location v-for="location in locationData" :key="location.name" :data="location" />
+		<Location v-for="(location, index) in locationData" :key="location.name" :data="location" :index="index" />
   </div>
 </template>
 
