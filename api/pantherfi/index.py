@@ -7,24 +7,23 @@ app = Flask(__name__)
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["mydatabase"]
 
-node = db["node"]
+nodes = db["nodes"]
 observations = db["observations"]
 
 
 
 @app.route('/')
 def get_observations():
-  obs = node["observations"]
-  if(len(obs) < 1440):  #assuming updates by the minute
-    return jsonify(obs)
-  else:
-    return jsonify(obs[len(obs) - 14401,len(obs) -1])
+  obs = observations.find({}) # get all observations - query to only get last 24h will be written later
+  return jsonify(obs)
   
 
 
 @app.route('/', methods=['POST'])
 def add_observation():
-  iden = observations.insert_one(request.get_json())
-  
-  node["observations"].append(iden)
+  obs_data = request.get_json()
+  # todo: validate obs
+  matched_node = nodes.find_one({"hostname": obs_data["hostname"]}) # find the right node by hostname
+  obs_data["node"] = matched_node["_id"] # add ref
+  iden = observations.insert_one(obs_data) # insert the observation
   return '', 204
