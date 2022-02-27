@@ -27,6 +27,7 @@ def add_observation():
   print(obs_data)
   # todo: validate obs
   matched_node = nodes.find_one({"hostname": obs_data["hostname"]}) # find the right node by hostname
+  print(matched_node)
   obs_data["node"] = matched_node["_id"] # add ref
   obs_data["timestamp"] = int(time.time()) # add timestamp
   iden = observations.insert_one(obs_data) # insert the observation
