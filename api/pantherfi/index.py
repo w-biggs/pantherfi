@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
 import pymongo
-import json
+from bson import json_util
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ observations = db["observations"]
 @app.route('/')
 def get_observations():
   obs = observations.find({}) # get all observations - query to only get last 24h will be written later
-  return jsonify(obs)
+  return json_util.dumps(obs)
   
 
 
