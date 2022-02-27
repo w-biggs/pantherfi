@@ -16,9 +16,9 @@ observations = db["observations"]
 def get_observations():
   obs = node["observations"]
   if(len(obs) < 1440):  #assuming updates by the minute
-  	return jsonify(obs)
+    return jsonify(obs)
   else:
-  	return jsonify(obs[len(obs) - 14401,len(obs) -1]):
+    return jsonify(obs[len(obs) - 14401,len(obs) -1])
   
 
 
