@@ -1,6 +1,6 @@
 ---
 // Component Imports
-import Location from '../components/Location.vue';
+import LocationList from '../components/LocationList.vue';
 
 // Component Script:
 let title = 'PantherFi';
@@ -45,9 +45,7 @@ let title = 'PantherFi';
 		</div>
 	</header>
 	<main>
-		<Location name="Hillman Library - First Floor" client:load />
-		<Location name="Hillman Library - Third Floor" client:load />
-		<Location name="Hillman Library - Fourth Floor" client:load />
+		<LocationList client:load />
 	</main>
 </body>
 </html>

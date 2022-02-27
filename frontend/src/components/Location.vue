@@ -1,17 +1,17 @@
 <template>
   <div class="location" :expanded="expandState">
-    <h2>{{ name }}</h2>
+    <h2>{{ data.name }}</h2>
     <div class="status">
       <span class="location-info-type">Status:</span>
-      <span class="status-value" :status="status">{{ statusStrings[status] }}</span>
+      <span class="status-value" :status="data.curr_status.status">{{ statusStrings[data.curr_status.status] }}</span>
     </div>
     <div class="speed">
       <span class="location-info-type">Speed:</span>
-      <span>{{ up }}↑ {{ down }}↓</span>
+      <span>{{data.curr_status.status === 'up' ? `${data.curr_status.down}↓ ${data.curr_status.up}↑` : '--'}}</span>
     </div>
     <div class="ping">
       <span class="location-info-type">Ping:</span>
-      <span>{{ ping }}ms</span>
+      <span>{{data.curr_status.status === 'up' ? `${data.curr_status.ping}ms` : '--'}}</span>
     </div>
     <div class="toggle">
       <button @click="expand()">
@@ -19,25 +19,72 @@
       </button>
     </div>
     <div class="graphs">
-      Graphs go here
+      <div id="down-graph"></div>
+      <div id="up-graph"></div>
+      <div id="ping-graph"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import Highcharts from 'highcharts'; 
+import BrokenAxis from 'highcharts/modules/broken-axis';
 
 const props = defineProps({
-    name: {
-      type: String,
-      required: true,
-    }
+  data: Object
 });
 
-const status = 'up';
-const up = 30;
-const down = 30;
-const ping = 7;
+const buildChartOptions = function buildChartOptions(units, data) {
+  return {
+    title: undefined,
+    legend: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        gapUnit: 1000,
+        gapSize: 5,
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false
+          }
+        }
+      }
+    },
+    chart: {
+      backgroundColor: 'transparent',
+      height: '15%'
+    },
+    xAxis: {
+      tickInterval: (10 * 60 * 1000),
+      type: 'datetime',
+      max: new Date().getTime(),
+      min: new Date().getTime() - (6 * 60 * 60 * 1000),
+    },
+    yAxis: {
+      title: {
+        text: units
+      }
+    },
+    series: [{
+      data: data,
+      marker: {
+        enabled: true,
+        fillColor: 'rgba(255,255,255,0.25)',
+        radius: 1
+      }
+    }]
+  };
+};
+
+onMounted(() => {
+  BrokenAxis(Highcharts);
+  Highcharts.chart('down-graph', buildChartOptions('Download (mbps)', props.data.obs.down));
+  Highcharts.chart('up-graph', buildChartOptions('Upload (mbps)', props.data.obs.up));
+  Highcharts.chart('ping-graph', buildChartOptions('Ping (ms)', props.data.obs.ping));
+});
 
 const statusStrings = {
   up: 'Up',
