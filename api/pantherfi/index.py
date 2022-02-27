@@ -2,6 +2,7 @@ from flask import Flask, Response, request
 import pymongo
 from bson import json_util
 import time
+import hashlib
 
 app = Flask(__name__)
 
@@ -41,12 +42,17 @@ def get_observations():
 def add_observation():
   print('received obs')
   obs_data = request.get_json()
-  print(obs_data)
+  # print(obs_data)
   # todo: validate obs
   matched_node = nodes.find_one({"hostname": obs_data["hostname"]}) # find the right node by hostname
   print(matched_node)
   obs_data["node"] = matched_node["_id"] # add ref
   obs_data["timestamp"] = int(time.time()) # add timestamp
-  iden = observations.insert_one(obs_data) # insert the observation
-  print('inserted obs')
+  passkey = obs_data["passkey"]
+  hashed = hashlib.sha256(passkey.encode()).hexdigest()
+  if (hashed == matched_node["auth-hash"]):
+    iden = observations.insert_one(obs_data) # insert the observation
+    print('inserted obs')
+  else:
+    print('insert failed - bad auth')
   return '', 204
