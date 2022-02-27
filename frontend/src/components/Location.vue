@@ -7,11 +7,11 @@
     </div>
     <div class="speed">
       <span class="location-info-type">Speed:</span>
-      <span>{{data.curr_status.status === 'up' ? `${data.curr_status.down}↓ ${data.curr_status.up}↑` : '--'}}</span>
+      <span>{{data.curr_status.status === 'up' ? `${Math.round(data.curr_status.down)}↓ ${Math.round(data.curr_status.up)}↑` : '--'}}</span>
     </div>
     <div class="ping">
       <span class="location-info-type">Ping:</span>
-      <span>{{data.curr_status.status === 'up' ? `${data.curr_status.ping}ms` : '--'}}</span>
+      <span>{{data.curr_status.status === 'up' ? `${Math.round(data.curr_status.ping)}ms` : '--'}}</span>
     </div>
     <div class="toggle">
       <button @click="expand()">
