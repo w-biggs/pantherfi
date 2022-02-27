@@ -11,7 +11,7 @@ import Location from './Location.vue';
 let locationData = ref([]);
 
 onMounted(() => {
-  fetch('http://localhost:5000/')
+  fetch('https://pantherfi.wilsonbiggs.com/api')
     .then(response => {
       if (!response.ok) {
         console.error('Is remote down?');

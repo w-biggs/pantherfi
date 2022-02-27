@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "push": "rsync -rzh --info=progress2 --no-inc-recursive ./dist/ server:/srv/pantherfi/frontend/dist/",
+    "buildPush": "yarn build && yarn push"
   },
   "devDependencies": {
     "@astrojs/renderer-vue": "^0.4.0",
